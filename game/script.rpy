@@ -3,7 +3,7 @@ define nana = Character("Nana", who_color="#cb8872", what_color="#FFF")
 define ayame = Character("Ayame", who_color="#746060", what_color="#FFF")
 define mayo = Character("Mayonaise", who_color="#957372", what_color="#FFF")
 define hana = Character("Hana", who_color="#d7cbc4", what_color="#FFF")
-define p = Character("Unknown", who_color="#000000", what_color="#FFF")
+define p = Character("Unknown", who_color="#1f4eff", what_color="#FFF")
 
 # Variables
 default nana_points = 0
@@ -81,12 +81,14 @@ define dis1 = { "master" : Dissolve(1.0) }
 define dis2 = { "master" : Dissolve(2.0) }
 label start:
     play sound daydream
-    scene day1
+    scene black
+    show bg day 1 with dissolve
     "Day 1"
-    show bg room morning lightoff with dis2
+    show bg room morning lightoff with dissolve
     pause
     "I should hurry to school!"
-    show bg street redux day with dis1
+    show bg street redux day with dissolve
+    hide bg
     show nana laugh at right with dissolve
     nana "Hi!"
     nana "You must be in the same school as me{w=0.4}{nw}"
@@ -95,21 +97,34 @@ label start:
     p "My name is [p.name]"
     nana " Oh! [p.name], what a cool name!"
     nana "let's go to school together"
-    show bg school gate with dis1
+    scene black with dissolve
+    scene bg school gate with dis1
     show nana confident at right with dissolve
     nana "Yes! we have arrived at time!"
     nana "Have a good day, See ya!"
+    scene black with dissolve
     scene bg classroom 3 day with dis1
     show ayame talk at right with dissolve
     ayame "Hello [p.name], you where a little late, where you have been?"
     menu:
         "I fall asleep":
-            $ nana_points += 1
+            $ ayame_points += 1
+            $ ayame_choice_1 = "1"
             p "I fall asleep"
+
         "That's non of your business":
-            $ nana_points -= 1
+            $ ayame_points -= 1
+            $ ayame_choice_1 = "0"
             p "That's non of your business"
+    if ayame_choice_1 == "1":
+        show ayame smile with dissolve
+        ayame "Aha!, make sure you don't miss classes."
+        ayame "Bye for now."
+    if ayame_choice_1 == "0":
+        show ayame angry with dissolve
+        ayame "[p.name]! That's rude!"
+        ayame "I won't talk to you anymore!"
     pause
-    scene 
+    
     
     return
