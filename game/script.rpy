@@ -74,21 +74,24 @@ image bg street redux day = "images/001/street_redux_day.jpg"
 image bg school gate = "images/001/generic_school_gate.jpg"
 image bg classroom 3 day = "images/001/classroom_03_day.jpg"
 image bg room = "images/001/room_morning_light_off.jpg"
-
+image bg street sunset = "images/001/street_sunset.jpg"
 
 # Transitions
-define dis1 = { "master" : Dissolve(1.0) } 
-define dis2 = { "master" : Dissolve(2.0) }
+define dis1 = Dissolve(1.0)
+define dis2 = Dissolve(2.0)
 label start:
+    jump day_loop
+
+label day_loop:
     play sound daydream
     scene black
     show bg day 1 with dissolve
     "Day 1"
-    show bg room morning lightoff with dissolve
+    show bg room morning lightoff with dis1
     pause
     "I should hurry to school!"
-    show bg street redux day with dissolve
-    hide bg
+    scene black
+    show bg street redux day with dis1
     show nana laugh at right with dissolve
     nana "Hi!"
     nana "You must be in the same school as me{w=0.4}{nw}"
@@ -98,12 +101,12 @@ label start:
     nana " Oh! [p.name], what a cool name!"
     nana "let's go to school together"
     scene black with dissolve
-    scene bg school gate with dis1
+    show bg school gate with dis1
     show nana confident at right with dissolve
     nana "Yes! we have arrived at time!"
     nana "Have a good day, See ya!"
     scene black with dissolve
-    scene bg classroom 3 day with dis1
+    show bg classroom 3 day with dis1
     show ayame talk at right with dissolve
     ayame "Hello [p.name], you where a little late, where you have been?"
     menu:
@@ -125,6 +128,13 @@ label start:
         ayame "[p.name]! That's rude!"
         ayame "I won't talk to you anymore!"
     pause
-    
+    scene black with dissolve
+    show street sunset with dissolve
+    show mayo normal with dissolve
+    if (ayame_points > 2 and ayame_choice_1 == "1") or True :
+        "you are okay"
+    elif (ayame_points < 2 and not ayame_choice_1 == "0"):
+        "you are not okay"
+
     
     return
