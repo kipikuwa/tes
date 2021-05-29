@@ -74,7 +74,7 @@ image bg street redux day = "images/001/street_redux_day.jpg"
 image bg school gate = "images/001/generic_school_gate.jpg"
 image bg classroom 3 day = "images/001/classroom_03_day.jpg"
 image bg room = "images/001/room_morning_light_off.jpg"
-image bg street sunset = "images/001/street_sunset.jpg"
+image bg street home evening = "images/001/street_home_evening.jpg"
 
 # Transitions
 define dis1 = Dissolve(1.0)
@@ -83,7 +83,7 @@ label start:
     jump day_loop
 
 label day_loop:
-    play sound daydream
+   # play sound daydream
     scene black
     show bg day 1 with dissolve
     "Day 1"
@@ -92,7 +92,7 @@ label day_loop:
     "I should hurry to school!"
     scene black
     show bg street redux day with dis1
-    show nana laugh at right with dissolve
+    show nana laugh with dissolve
     nana "Hi!"
     nana "You must be in the same school as me{w=0.4}{nw}"
     nana "My name is Brandy, What is your name?"
@@ -102,12 +102,12 @@ label day_loop:
     nana "let's go to school together"
     scene black with dissolve
     show bg school gate with dis1
-    show nana confident at right with dissolve
+    show nana confident with dissolve
     nana "Yes! we have arrived at time!"
     nana "Have a good day, See ya!"
     scene black with dissolve
     show bg classroom 3 day with dis1
-    show ayame talk at right with dissolve
+    show ayame talk with dissolve
     ayame "Hello [p.name], you where a little late, where you have been?"
     menu:
         "I fall asleep":
@@ -123,18 +123,47 @@ label day_loop:
         show ayame smile with dissolve
         ayame "Aha!, make sure you don't miss classes."
         ayame "Bye for now."
+        hide ayame with dissolve
     if ayame_choice_1 == "0":
         show ayame angry with dissolve
         ayame "[p.name]! That's rude!"
-        ayame "I won't talk to you anymore!"
+        ayame "ah! What's the matter with you today?"
+        ayame "i can't believe you said that to me!"
+        hide ayame with dissolve
     pause
     scene black with dissolve
-    show street sunset with dissolve
+    show bg street home evening with dissolve
+    "What's that sound?"
     show mayo normal with dissolve
-    if (ayame_points > 2 and ayame_choice_1 == "1") or True :
-        "you are okay"
-    elif (ayame_points < 2 and not ayame_choice_1 == "0"):
-        "you are not okay"
+    mayo "Oh! Hello [p.name]"
+    mayo "How are you?"
+    menu:
+        "Who are you?":
+            $ mayo_points += 1
+            $ mayo_choice_1 = "1"
+            p "Who are you?"
+
+        "I'm good, Sorry but who are you?":
+            $ mayo_points -= 1
+            $ mayo_choice_1 = "0"
+            p "I'm good, And who are you?"
+    if mayo_choice_1 == "1":
+        show mayo angry with dissolve
+        mayo "You don't know me?"
+        mayo "I'm Mayonaise! the witch!"
+        hide mayo with dissolve
+    if mayo_choice_1 == "0":
+        show mayo smile with dissolve
+        mayo "Good to hear that."
+        mayo "I'm Mayonaise the witch."
+        mayo "You can find me in the Jungle"
+        mayo "Sorry! gotta go, BYE!"
+        hide mayo with dissolve
+    pause
+   # if (ayame_points > 2 and ayame_choice_1 == "1") or True :
+   #     "you are okay"
+   # elif (ayame_points < 2 and not ayame_choice_1 == "0"):
+   #     "you are not okay"
 
     
     return
