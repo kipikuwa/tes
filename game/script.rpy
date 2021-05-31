@@ -75,6 +75,7 @@ image bg school gate = "images/001/generic_school_gate.jpg"
 image bg classroom 3 day = "images/001/classroom_03_day.jpg"
 image bg room = "images/001/room_morning_light_off.jpg"
 image bg street home evening = "images/001/street_home_evening.jpg"
+image bg room night lightoff = "images/001/room_evening_light_off.jpg"
 
 # Transitions
 define dis1 = Dissolve(1.0)
@@ -159,6 +160,16 @@ label day_loop:
         mayo "You can find me in the Jungle"
         mayo "Sorry! gotta go, BYE!"
         hide mayo with dissolve
+    "Oh, She just left!"
+    "Anyway, i should go to home it's getting dark around here"
+    show bg room night lightoff with dissolve
+    "ah... i'm so exhausted today"
+    "i will just sleep right away"
+    scene black with dis2
+    show hana smileg with dissolve
+    hana "Hello [p.name]!"
+    hana "I'm Hana, the random wanderer in peoples dreams"
+    hana ""
     pause
    # if (ayame_points > 2 and ayame_choice_1 == "1") or True :
    #     "you are okay"
