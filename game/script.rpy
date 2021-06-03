@@ -152,6 +152,8 @@ label day_loop:
         show mayo angry with dissolve
         mayo "You don't know me?"
         mayo "I'm Mayonaise! the witch!"
+        mayo "You can find me in the Jungle"
+        mayo "Sorry! gotta go, BYE!"
         hide mayo with dissolve
     if mayo_choice_1 == "0":
         show mayo smile with dissolve
@@ -169,7 +171,31 @@ label day_loop:
     show hana smileg with dissolve
     hana "Hello [p.name]!"
     hana "I'm Hana, the random wanderer in peoples dreams"
-    hana ""
+    hana "We can be friends if you want"
+    menu:
+        "OK, i like that":
+            $ hana_points += 1
+            $ hana_choice_1 = "1"
+            p "OK, i like that"
+
+        "Oh, that's a weird job":
+            $ hana_points -= 1
+            $ hana_choice_1 = "0"
+            p "Oh, that's a weird job"
+    if hana_choice_1 == "0":
+        show hana angryg with dissolve
+        hana "You really are a tough one ha?"
+        hana "Anyway, you may see me in your dreams from times to times"
+        hana "You have to wake up"
+        hana "Bye for now"
+        hide hana with dissolve
+    if hana_choice_1 == "1":
+        show hana smileg with dissolve
+        hana "Good to hear that."
+        hana "Since it's your dream you can change things in it"
+        hana "We will discuss that next time we saw each other"
+        hana "You have to wake up, it's morning, bye for now"
+        hide hana with dissolve
     pause
    # if (ayame_points > 2 and ayame_choice_1 == "1") or True :
    #     "you are okay"
