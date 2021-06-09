@@ -118,6 +118,37 @@ label day_loop:
         nana "Yes! we have arrived at time!"
         nana "Have a good day, See ya!"
 
+    label nana0:
+        show street redux day with dis1
+        show nana laugh with dissolve
+        nana "Hey! [p.name] how are you today?"
+        nana "Going to school?"
+        nana "let's go together"
+        scene black with dissolve
+        show bg school gate with dis1
+        show nana confident with dissolve
+        nana "OK, i hope you have a good time today"
+        menu:
+            "Thank you, you have a good day too.":
+                $ nana_points += 1
+                $ nana_choice_1 = "1"
+                p "Thank you, you have a good day too."
+
+            "Whatever!":
+                $ nana_points -= 1
+                $ nana_choice_1 = "0"
+                p "Whatever"
+        if nana_choice_1 == "1":
+            show nana smile with dissolve
+            nana "Thanks, See ya later"
+            hide nana with dissolve
+        if nana_choice_1 == "0":
+            show nana angry with dissolve
+            nana "[p.name]! What's up with that?"
+            nana "I didn't except that"
+            nana "ugh!"
+            hide nana with dissolve
+            
     # Ayame's Labels
 
     label ayame:
