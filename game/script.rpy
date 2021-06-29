@@ -1,3 +1,4 @@
+
 # Characters
 
 define nana = Character("Nana", who_color="#cb8872", what_color="#FFF") 
@@ -76,7 +77,7 @@ image bg room night lightoff = "images/001/room_evening_light_off.jpg"
 
 # Variables
 
-default nana_points = 0
+default nana_points = 1
 default ayame_points = 0
 default mayo_points = 0
 default hana_points = 0
@@ -92,6 +93,7 @@ label start:
 
 label day_loop:
    # play sound daydream
+    
     scene black
     show bg day 1 with dissolve
     "Day 1"
@@ -100,14 +102,19 @@ label day_loop:
     "I should hurry to school!"
     
     # Nana's Labels
+label nanal:
+    if nana_points == 0:
+        jump nana0
+    elif nana_points == 1:
+        jump nana1
 
-    label nana:
+    label nana0:
         scene black
         show bg street redux day with dis1
         show nana laugh with dissolve
         nana "Hi!"
         nana "You must be in the same school as me{w=0.4}{nw}"
-        nana "My name is Brandy, What is your name?"
+        nana "My name is Nana, What is your name?"
         $ p.name = renpy.input("What is your name?")
         p "My name is [p.name]"
         nana " Oh! [p.name], what a cool name!"
@@ -117,9 +124,10 @@ label day_loop:
         show nana confident with dissolve
         nana "Yes! we have arrived at time!"
         nana "Have a good day, See ya!"
+        jump ayamel
 
-    label nana0:
-        show street redux day with dis1
+    label nana1:
+        scene bg street redux day with dis1
         show nana laugh with dissolve
         nana "Hey! [p.name] how are you today?"
         nana "Going to school?"
@@ -150,8 +158,13 @@ label day_loop:
             hide nana with dissolve
             
     # Ayame's Labels
+label ayamel:
+    if ayame_points == 0:
+        jump ayame0
+    elif ayame_points == 1:
+        jump ayame1
 
-    label ayame:
+    label ayame0:
         scene black with dissolve
         show bg classroom 3 day with dis1
         show ayame talk with dissolve
