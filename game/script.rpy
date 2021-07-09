@@ -77,10 +77,11 @@ image bg room night lightoff = "images/001/room_evening_light_off.jpg"
 
 # Variables
 
-default nana_points = 1
+default nana_points = 0
 default ayame_points = 0
 default mayo_points = 0
 default hana_points = 0
+default day_counter = 1
 
 # Transitions
 
@@ -96,7 +97,7 @@ label day_loop:
     
     scene black
     show bg day 1 with dissolve
-    "Day 1"
+    "Day [day_counter]"
     show bg room morning lightoff with dis1
     pause
     "I should hurry to school!"
@@ -124,6 +125,26 @@ label nanal:
         show nana confident with dissolve
         nana "Yes! we have arrived at time!"
         nana "Have a good day, See ya!"
+        menu:
+            "Thank you, you have a good day too.":
+                $ nana_points += 1
+                $ nana_choice_1 = "1"
+                p "Thank you, you have a good day too."
+
+            "OK, let's hangout together after school.":
+                $ nana_points -= 1
+                $ nana_choice_1 = "0"
+                p "OK, let's hangout together after school"
+        if nana_choice_1 == "1":
+            show nana smile with dissolve
+            nana "Thanks, See ya later"
+            hide nana with dissolve
+        if nana_choice_1 == "0":
+            show nana angry with dissolve
+            nana "[p.name]! No! a big No!"
+            nana "Too soon for that."
+            nana "ugh!"
+            hide nana with dissolve
         jump ayamel
 
     label nana1:
@@ -137,10 +158,10 @@ label nanal:
         show nana confident with dissolve
         nana "OK, i hope you have a good time today"
         menu:
-            "Thank you, you have a good day too.":
+            "Ummm... You too, i hope you a good score in your exams today.":
                 $ nana_points += 1
                 $ nana_choice_1 = "1"
-                p "Thank you, you have a good day too."
+                p "Ummm... You too, i hope you a good score in your exams today."
 
             "Whatever!":
                 $ nana_points -= 1
@@ -263,8 +284,8 @@ label ayamel:
             hana "You have to wake up, it's morning, bye for now"
             hide hana with dissolve
         pause
-
-    return
+    $ day_counter += 1
+    jump day_loop
 
    # if (ayame_points > 2 and ayame_choice_1 == "1") or True :
    #     "you are okay"
