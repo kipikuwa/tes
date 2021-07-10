@@ -81,6 +81,14 @@ image bg room = "images/001/room_morning_light_off.jpg"
 image bg street home evening = "images/001/street_home_evening.jpg"
 image bg room night lightoff = "images/001/room_evening_light_off.jpg"
 
+# Map Images
+image mapbg = "images/map/mapbg.png"
+image mapbt 0 = "images/map/mapbt0.png"
+image mapbt 1 = "images/map/mapbt1.png"
+image mapbt 2 = "images/map/mapbt2.png"
+image mapbt 3 = "images/map/mapbt3.png"
+image mapbt 4 = "images/map/mapbt4.png"
+
 # Variables
 
 default nana_points  = 1
@@ -98,6 +106,20 @@ default day_counter = 1
 define dis1 = Dissolve(1.0)
 define dis2 = Dissolve(2.0)
 
+# Screens
+screen map():
+    button:
+        text "House"
+        action Jump("hanal")
+    button:
+        text "Street"
+        action Jump("nanal")
+    button:
+        text "School"
+        action Jump("ayamel")
+    button:
+        text "Jungle"
+        action Jump("mayol")
 # Start Label
 label start:
     jump day_loop
@@ -112,74 +134,74 @@ label day_loop:
     
     # Nana's Labels
 label nanal:
+    scene black
+    if not "first" in nana_flags:
+        jump nana1
+    elif nana_points == 2:
+        jump nana2
+    elif nana_points == 3:
+        jump nana3
+    elif nana_points == 4:
+        jump nana4
+    elif nana_points == 5:
+        jump nana5
 
-    label nana1:
-        if not "first" in nana_flags:
-            scene black
-            show bg street redux day with dis1
-            show nana laugh with dissolve
-            nana "Hi!"
-            nana "You must be in the same school as me{w=0.4}{nw}"
-            nana "My name is Nana, What is your name?"
-            $ p.name = renpy.input("What is your name?")
-            p "My name is [p.name]"
-            nana " Oh! [p.name], what a cool name!"
-            nana "let's go to school together"
-            scene black with dissolve
-            show bg school gate with dis1
-            show nana confident with dissolve
-            nana "Yes! we have arrived at time!"
-            nana "Have a good day, See ya!"
-            menu:
-                "Thank you, you have a good day too.":
-                    p "Thank you, you have a good day too."
+label nana1:
+    show bg street redux day with dis1
+    show nana laugh with dissolve
+    nana "Hi!"
+    nana "You must be in the same school as me{w=0.4}{nw}"
+    nana "My name is Nana, What is your name?"
+    $ p.name = renpy.input("What is your name?")
+    p "My name is [p.name]"
+    nana " Oh! [p.name], what a cool name!"
+    nana "let's go to school together"
+    scene black with dissolve
+    show bg school gate with dis1
+    show nana confident with dissolve
+    nana "Yes! we have arrived at time!"
+    nana "Have a good day, See ya!"
+    menu:
+        "Thank you, you have a good day too.":
+            p "Thank you, you have a good day too."
 
-            show nana smile with dissolve
-            nana "Thanks, See ya later"
-            hide nana with dissolve
-            $ nana_flags.append("first")
-        else:
-            if nana_points == 2:
-                jump nana2
-            elif nana_points == 3:
-                jump nana3
-            elif nana_points == 4:
-                jump nana4
-            elif nana_points == 5:
-                jump nana5
+    show nana smile with dissolve
+    nana "Thanks, See ya later"
+    hide nana with dissolve
+    $ nana_flags.append("first")
+    $ nana_points += 1
+    call screen map
+label nana2:
+    scene bg street redux day with dis1
+    show nana laugh with dissolve
+    nana "Hey! [p.name] how are you today?"
+    nana "Going to school?"
+    nana "let's go together"
+    scene black with dissolve
+    show bg school gate with dis1
+    show nana confident with dissolve
+    nana "OK, i hope you have a good time today"
+    menu:
+        "Ummm... You too, i hope you a good score in your exams today.":
+            $ nana_points += 1
+            $ nana_choice_1 = "1"
+            p "Ummm... You too, i hope you a good score in your exams today."
 
-
-
-    label nana2:
-        scene bg street redux day with dis1
-        show nana laugh with dissolve
-        nana "Hey! [p.name] how are you today?"
-        nana "Going to school?"
-        nana "let's go together"
-        scene black with dissolve
-        show bg school gate with dis1
-        show nana confident with dissolve
-        nana "OK, i hope you have a good time today"
-        menu:
-            "Ummm... You too, i hope you a good score in your exams today.":
-                $ nana_points += 1
-                $ nana_choice_1 = "1"
-                p "Ummm... You too, i hope you a good score in your exams today."
-
-            "Whatever!":
-                $ nana_points -= 1
-                $ nana_choice_1 = "0"
-                p "Whatever"
-        if nana_choice_1 == "1":
-            show nana smile with dissolve
-            nana "Thanks, See ya later"
-            hide nana with dissolve
-        if nana_choice_1 == "0":
-            show nana angry with dissolve
-            nana "[p.name]! What's up with that?"
-            nana "I didn't except that"
-            nana "ugh!"
-            hide nana with dissolve
+        "Whatever!":
+            $ nana_points -= 1
+            $ nana_choice_1 = "0"
+            p "Whatever!"
+    if nana_choice_1 == "1":
+        show nana smile with dissolve
+        nana "Thanks, See ya later"
+        hide nana with dissolve
+    if nana_choice_1 == "0":
+        show nana angry with dissolve
+        nana "[p.name]! What's up with that?"
+        nana "I didn't except that"
+        nana "ugh!"
+        hide nana with dissolve
+        call screen map
             
     # Ayame's Labels
 label ayamel:
@@ -197,10 +219,12 @@ label ayamel:
         ayame "Aha!, make sure you don't miss classes."
         ayame "Bye for now."
         hide ayame with dissolve
+        $ ayame_points += 1
+        call screen map
 
     # Mayo's Labels
 
-    label mayo:
+    label mayol:
         scene black with dissolve
         show bg street home evening with dissolve
         "What's that sound?"
@@ -218,10 +242,12 @@ label ayamel:
         hide mayo with dissolve
         "Oh, She just left!"
         "Anyway, i should go to home it's getting dark around here"
+        $ mayo_points += 1
+        call screen map
 
     # Hana's Labels
 
-    label hana:
+    label hanal:
         show bg room night lightoff with dissolve
         "ah... i'm so exhausted today"
         "i will just sleep right away"
@@ -240,6 +266,7 @@ label ayamel:
         hana "We will discuss that next time we saw each other"
         hana "You have to wake up, it's morning, bye for now"
         hide hana with dissolve
+        $ hana_points += 1
         pause
     $ day_counter += 1
     jump day_loop
