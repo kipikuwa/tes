@@ -1,4 +1,11 @@
-
+init python:
+    chnana = 1
+    def change_nana(nana_points):
+        chnana += nana_points
+        if chnana < 1:
+            chnana = 1
+        elif chnana > 5:
+            chnana = 5
 # Characters
 
 define nana = Character("Nana", who_color="#cb8872", what_color="#FFF") 
@@ -66,7 +73,6 @@ image hana talkg = "images/Hana/noglasses/talkg.png"
 
 # Backgrounds
 
-image bg day 1 = "images/other/day1.jpg"
 image bg room morning lightoff = "images/001/room_morning_light_off.jpg"
 image bg street redux day = "images/001/street_redux_day.jpg"
 image bg school gate = "images/001/generic_school_gate.jpg"
@@ -77,10 +83,14 @@ image bg room night lightoff = "images/001/room_evening_light_off.jpg"
 
 # Variables
 
-default nana_points = 0
-default ayame_points = 0
-default mayo_points = 0
-default hana_points = 0
+default nana_points  = 1
+default nana_flags = []
+default ayame_points = 1
+default ayame_flags = []
+default mayo_points = 1
+default mayo_flags = []
+default hana_points = 1
+default hana_flags = []
 default day_counter = 1
 
 # Transitions
@@ -96,58 +106,51 @@ label day_loop:
    # play sound daydream
     
     scene black
-    show bg day 1 with dissolve
     "Day [day_counter]"
     show bg room morning lightoff with dis1
-    pause
     "I should hurry to school!"
     
     # Nana's Labels
 label nanal:
-    if nana_points == 0:
-        jump nana0
-    elif nana_points == 1:
-        jump nana1
 
-    label nana0:
-        scene black
-        show bg street redux day with dis1
-        show nana laugh with dissolve
-        nana "Hi!"
-        nana "You must be in the same school as me{w=0.4}{nw}"
-        nana "My name is Nana, What is your name?"
-        $ p.name = renpy.input("What is your name?")
-        p "My name is [p.name]"
-        nana " Oh! [p.name], what a cool name!"
-        nana "let's go to school together"
-        scene black with dissolve
-        show bg school gate with dis1
-        show nana confident with dissolve
-        nana "Yes! we have arrived at time!"
-        nana "Have a good day, See ya!"
-        menu:
-            "Thank you, you have a good day too.":
-                $ nana_points += 1
-                $ nana_choice_1 = "1"
-                p "Thank you, you have a good day too."
+    label nana1:
+        if not "first" in nana_flags:
+            scene black
+            show bg street redux day with dis1
+            show nana laugh with dissolve
+            nana "Hi!"
+            nana "You must be in the same school as me{w=0.4}{nw}"
+            nana "My name is Nana, What is your name?"
+            $ p.name = renpy.input("What is your name?")
+            p "My name is [p.name]"
+            nana " Oh! [p.name], what a cool name!"
+            nana "let's go to school together"
+            scene black with dissolve
+            show bg school gate with dis1
+            show nana confident with dissolve
+            nana "Yes! we have arrived at time!"
+            nana "Have a good day, See ya!"
+            menu:
+                "Thank you, you have a good day too.":
+                    p "Thank you, you have a good day too."
 
-            "OK, let's hangout together after school.":
-                $ nana_points -= 1
-                $ nana_choice_1 = "0"
-                p "OK, let's hangout together after school"
-        if nana_choice_1 == "1":
             show nana smile with dissolve
             nana "Thanks, See ya later"
             hide nana with dissolve
-        if nana_choice_1 == "0":
-            show nana angry with dissolve
-            nana "[p.name]! No! a big No!"
-            nana "Too soon for that."
-            nana "ugh!"
-            hide nana with dissolve
-        jump ayamel
+            $ nana_flags.append("first")
+        else:
+            if nana_points == 2:
+                jump nana2
+            elif nana_points == 3:
+                jump nana3
+            elif nana_points == 4:
+                jump nana4
+            elif nana_points == 5:
+                jump nana5
 
-    label nana1:
+
+
+    label nana2:
         scene bg street redux day with dis1
         show nana laugh with dissolve
         nana "Hey! [p.name] how are you today?"
@@ -180,37 +183,20 @@ label nanal:
             
     # Ayame's Labels
 label ayamel:
-    if ayame_points == 0:
-        jump ayame0
-    elif ayame_points == 1:
-        jump ayame1
 
-    label ayame0:
+    label ayame1:
         scene black with dissolve
         show bg classroom 3 day with dis1
         show ayame talk with dissolve
         ayame "Hello [p.name], you where a little late, where you have been?"
         menu:
             "I fall asleep":
-                $ ayame_points += 1
-                $ ayame_choice_1 = "1"
                 p "I fall asleep"
 
-            "That's non of your business":
-                $ ayame_points -= 1
-                $ ayame_choice_1 = "0"
-                p "That's non of your business"
-        if ayame_choice_1 == "1":
-            show ayame smile with dissolve
-            ayame "Aha!, make sure you don't miss classes."
-            ayame "Bye for now."
-            hide ayame with dissolve
-        if ayame_choice_1 == "0":
-            show ayame angry with dissolve
-            ayame "[p.name]! That's rude!"
-            ayame "ah! What's the matter with you today?"
-            ayame "i can't believe you said that to me!"
-            hide ayame with dissolve
+        show ayame smile with dissolve
+        ayame "Aha!, make sure you don't miss classes."
+        ayame "Bye for now."
+        hide ayame with dissolve
 
     # Mayo's Labels
 
@@ -222,29 +208,14 @@ label ayamel:
         mayo "Oh! Hello [p.name]"
         mayo "How are you?"
         menu:
-            "Who are you?":
-                $ mayo_points += 1
-                $ mayo_choice_1 = "1"
-                p "Who are you?"
-
             "I'm good, Sorry but who are you?":
-                $ mayo_points -= 1
-                $ mayo_choice_1 = "0"
                 p "I'm good, And who are you?"
-        if mayo_choice_1 == "1":
-            show mayo angry with dissolve
-            mayo "You don't know me?"
-            mayo "I'm Mayonaise! the witch!"
-            mayo "You can find me in the Jungle"
-            mayo "Sorry! gotta go, BYE!"
-            hide mayo with dissolve
-        if mayo_choice_1 == "0":
-            show mayo smile with dissolve
-            mayo "Good to hear that."
-            mayo "I'm Mayonaise the witch."
-            mayo "You can find me in the Jungle"
-            mayo "Sorry! gotta go, BYE!"
-            hide mayo with dissolve
+        show mayo smile with dissolve
+        mayo "Good to hear that."
+        mayo "I'm Mayonaise the witch."
+        mayo "You can find me in the Jungle"
+        mayo "Sorry! gotta go, BYE!"
+        hide mayo with dissolve
         "Oh, She just left!"
         "Anyway, i should go to home it's getting dark around here"
 
@@ -261,28 +232,14 @@ label ayamel:
         hana "We can be friends if you want"
         menu:
             "OK, i like that":
-                $ hana_points += 1
-                $ hana_choice_1 = "1"
                 p "OK, i like that"
 
-            "Oh, that's a weird job":
-                $ hana_points -= 1
-                $ hana_choice_1 = "0"
-                p "Oh, that's a weird job"
-        if hana_choice_1 == "0":
-            show hana angryg with dissolve
-            hana "You really are a tough one ha?"
-            hana "Anyway, you may see me in your dreams from times to times"
-            hana "You have to wake up"
-            hana "Bye for now"
-            hide hana with dissolve
-        if hana_choice_1 == "1":
-            show hana smileg with dissolve
-            hana "Good to hear that."
-            hana "Since it's your dream you can change things in it"
-            hana "We will discuss that next time we saw each other"
-            hana "You have to wake up, it's morning, bye for now"
-            hide hana with dissolve
+        show hana smileg with dissolve
+        hana "Good to hear that."
+        hana "Since it's your dream you can change things in it"
+        hana "We will discuss that next time we saw each other"
+        hana "You have to wake up, it's morning, bye for now"
+        hide hana with dissolve
         pause
     $ day_counter += 1
     jump day_loop
