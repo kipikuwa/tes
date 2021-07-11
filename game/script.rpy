@@ -81,14 +81,6 @@ image bg room = "images/001/room_morning_light_off.jpg"
 image bg street home evening = "images/001/street_home_evening.jpg"
 image bg room night lightoff = "images/001/room_evening_light_off.jpg"
 
-# Map Images
-image mapbg = "images/map/mapbg.png"
-image mapbt 0 = "images/map/mapbt0.png"
-image mapbt 1 = "images/map/mapbt1.png"
-image mapbt 2 = "images/map/mapbt2.png"
-image mapbt 3 = "images/map/mapbt3.png"
-image mapbt 4 = "images/map/mapbt4.png"
-
 # Variables
 
 default nana_points  = 1
@@ -100,6 +92,13 @@ default mayo_flags = []
 default hana_points = 1
 default hana_flags = []
 default day_counter = 1
+default time_of_day = 0
+init python:
+    def change_time(value):
+        for i in range(value):
+            time_of_day += 1
+            if time_of_day > 24:
+                time_of_day = 0
 
 # Transitions
 
@@ -107,25 +106,41 @@ define dis1 = Dissolve(1.0)
 define dis2 = Dissolve(2.0)
 
 # Screens
-screen map():
-    button:
-        text "House"
-        action Jump("hanal")
-    button:
-        text "Street"
-        action Jump("nanal")
-    button:
-        text "School"
-        action Jump("ayamel")
-    button:
-        text "Jungle"
-        action Jump("mayol")
+screen map1():
+    add "mapbg"
+    style_prefix "map1"
+    vbox:
+        align .5,.5
+        hbox:
+            button:
+                text "House"
+                action Jump("hanal")#, function(change_time, 6)
+            button:
+                text "Street"
+                action Jump("nanal")#, function(change_time, 6)
+        hbox:
+            button:
+                text "School"
+                action Jump("ayamel")#, function(change_time, 6)
+            button:
+                text "Jungle"
+                action Jump("mayol")#, function(change_time, 6)
+
+style map1_button:
+    xysize (268,268)
+    idle_background "mapbt_idle"
+    hover_background "mapbt_hover"
+    hover_sound "audio/re2_coursor.wav"
+    activate_sound "audio/re2_decide.wav"
+style map1_text:
+    align(.5,.5)
+
 # Start Label
 label start:
     jump day_loop
 
 label day_loop:
-   # play sound daydream
+    #play sound daydream
     
     scene black
     "Day [day_counter]"
@@ -147,6 +162,8 @@ label nanal:
         jump nana5
 
 label nana1:
+#    if 6 < time_of_day < 12:
+ #       $ change_time()
     show bg street redux day with dis1
     show nana laugh with dissolve
     nana "Hi!"
@@ -170,7 +187,7 @@ label nana1:
     hide nana with dissolve
     $ nana_flags.append("first")
     $ nana_points += 1
-    call screen map
+    call screen map1
 label nana2:
     scene bg street redux day with dis1
     show nana laugh with dissolve
@@ -201,7 +218,7 @@ label nana2:
         nana "I didn't except that"
         nana "ugh!"
         hide nana with dissolve
-        call screen map
+        call screen map1
             
     # Ayame's Labels
 label ayamel:
