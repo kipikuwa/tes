@@ -242,6 +242,17 @@ label nana5:
             
 ############################################################## Ayame's Labels ##############################################################
 label ayame_labels:
+     scene black
+    if not "first" in ayame_flags:
+        jump ayame1
+    elif ayame_points == 2:
+        jump ayame2
+    elif ayame_points == 3:
+        jump ayame3
+    elif ayame_points == 4:
+        jump ayame4
+    elif ayame_points == 5:
+        jump ayame5
 
 label ayame1:
     scene black with dissolve
@@ -262,30 +273,42 @@ label ayame1:
 label ayame2:
     scene black
     p "2"
-    $ nana_points += 1
+    $ ayame_points += 1
     call screen map1 with dis1
 
 label ayame3:
     scene black
     p "3"
-    $ nana_points += 1
+    $ ayame_points += 1
     call screen map1 with dis1
 
 label ayame4:
     scene black
     p "4"
-    $ nana_points += 1
+    $ ayame_points += 1
     call screen map1 with dis1
 
 label ayame5:
     scene black
     p "5"
-    $ nana_points += 1
+    $ ayame_points += 1
     call screen map1 with dis1
 
 ############################################################## Mayo's Labels ##############################################################
 
 label mayo_labels:
+     scene black
+    if not "first" in mayo_flags:
+        jump mayo1
+    elif mayo_points == 2:
+        jump mayo2
+    elif mayo_points == 3:
+        jump mayo3
+    elif mayo_points == 4:
+        jump mayo4
+    elif mayo_points == 5:
+        jump mayo5
+
     scene black with dissolve
     show bg street home evening with dissolve
     "What's that sound?"
@@ -309,30 +332,42 @@ label mayo_labels:
 label mayo2:
     scene black
     p "4"
-    $ nana_points += 1
+    $ mayo_points += 1
     call screen map1 with dis1
 
 label mayo3:
     scene black
     p "4"
-    $ nana_points += 1
+    $ mayo_points += 1
     call screen map1 with dis1
 
 label mayo4:
     scene black
     p "4"
-    $ nana_points += 1
+    $ mayo_points += 1
     call screen map1 with dis1
 
 label mayo5:
     scene black
     p "4"
-    $ nana_points += 1
+    $ mayo_points += 1
     call screen map1 with dis1
 
 ############################################################## Hana's Labels ##############################################################
 
 label hana_labels:
+     scene black
+    if not "first" in hana_flags:
+        jump hana1
+    elif hana_points == 2:
+        jump hana2
+    elif hana_points == 3:
+        jump hana3
+    elif hana_points == 4:
+        jump hana4
+    elif hana_points == 5:
+        jump hana5
+
     show bg room night lightoff with dissolve
     "ah... i'm so exhausted today"
     "i will just sleep right away"
@@ -359,28 +394,30 @@ label hana_labels:
 label hana2:
     scene black
     p "4"
-    $ nana_points += 1
+    $ hana_points += 1
     call screen map1 with dis1
 
 label hana3:
     scene black
     p "4"
-    $ nana_points += 1
+    $ hana_points += 1
     call screen map1 with dis1
 
 label hana4:
     scene black
     p "4"
-    $ nana_points += 1
+    $ hana_points += 1
     call screen map1 with dis1
 
 label hana5:
     scene black
     p "4"
-    $ nana_points += 1
+    $ hana_points += 1
     call screen map1 with dis1
 
    # if (ayame_points > 2 and ayame_choice_1 == "1") or True :
    #     "you are okay"
    # elif (ayame_points < 2 and not ayame_choice_1 == "0"):
    #     "you are not okay"
+
+   
