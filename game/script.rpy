@@ -1,3 +1,23 @@
+# things to do:
+# empty label for each location
+# time passing system for home
+# change the time after each encounter
+# +1 and -1 icon for menus
+# each label should have 2 bgs
+# splash screen
+# ending screen
+# ending label for each character
+# with glasses and no glasses labels for hanas
+# use text tags
+# change font
+# change style and colors
+# change start meuu
+# sound effects
+# special heart icon for 5 point selection
+# go to sleep button on bed
+# today flag for each character and remove it at the end of the day
+#
+
 ############################################################## Inits ##############################################################
 init python:
     chnana = 1
@@ -109,12 +129,32 @@ image hana talkg = "images/Hana/noglasses/talkg.png"
 ############################################################## Backgrounds ##############################################################
 
 image bg room morning lightoff = "images/001/room_morning_light_off.jpg"
+image bg room dawn lightoff = "images/001/room_dawn_light_off.jpg"
+image bg room dawn lighton = "images/001/room_dawn_light_on.jpg"
+image bg room evening lightoff = "images/001/room_evening_light_on.jpg"
+image bg room night lightoff = "images/001/room_night_light_off.jpg"
+
 image bg street redux day = "images/001/street_redux_day.jpg"
+image bg street redux evening = "images/001/street_redux_evening.jpg"
+image bg street redux night = "images/001/street_redux_night.jpg"
+image bg street home evening = "images/001/street_redux_evening.jpg"
 image bg school gate = "images/001/generic_school_gate.jpg"
+
 image bg classroom 3 day = "images/001/classroom_03_day.jpg"
-image bg room = "images/001/room_morning_light_off.jpg"
-image bg street home evening = "images/001/street_home_evening.jpg"
-image bg room night lightoff = "images/001/room_evening_light_off.jpg"
+image bg classroom 3 evening = "images/001/classroom_03_evening.jpg"
+image bg classroom 3 night = "images/001/classroom_03_night.jpg"
+image bg classroom 4 day = "images/001/classroom_04_day.jpg"
+image bg classroom 4 evening = "images/001/classroom_04_evening.jpg"
+image bg classroom 4 night = "images/001/classroom_04_night.jpg"
+
+image bg jungle earlymorning = "images/001/philippines_003_early_morning.jpg"
+image bg jungle morning = "images/001/philippines_003_morning.jpg"
+image bg jungle day = "images/001/philippines_003_day.jpg"
+image bg jungle afternoon = "images/001/philippines_003_afternoon.jpg"
+image bg jungle night = "images/001/philippines_003_night.jpg"
+
+
+
 
 ############################################################## Variables ##############################################################
 
@@ -148,7 +188,7 @@ screen map1():
                 action Jump("hana_labels")#, function(change_time, 6)
             button:
                 text "Street"
-                action Jump("nana_labels")#, function(change_time, 6)
+                action NullAction()#, function(change_time, 6)
         hbox:
             button:
                 text "School"
@@ -164,6 +204,93 @@ style map1_button:
     hover_sound "audio/re2_coursor.wav"
     activate_sound "audio/re2_decide.wav"
 style map1_text:
+    align(.5,.5)
+
+screen map2():
+    add "mapbg"
+    style_prefix "map2"
+    vbox:
+        align .5,.5
+        hbox:
+            button:
+                text "House"
+                action Jump("hana_labels")#, function(change_time, 6)
+            button:
+                text "Street"
+                action Jump("nana_labels")#, function(change_time, 6)
+        hbox:
+            button:
+                text "School"
+                action NullAction()#, function(change_time, 6)
+            button:
+                text "Jungle"
+                action Jump("mayo_labels")#, function(change_time, 6)
+
+style map2_button:
+    xysize (268,268)
+    idle_background "mapbt_idle"
+    hover_background "mapbt_hover"
+    hover_sound "audio/re2_coursor.wav"
+    activate_sound "audio/re2_decide.wav"
+style map2_text:
+    align(.5,.5)
+
+screen map3():
+    add "mapbg"
+    style_prefix "map3"
+    vbox:
+        align .5,.5
+        hbox:
+            button:
+                text "House"
+                action Jump("hana_labels")#, function(change_time, 6)
+            button:
+                text "Street"
+                action Jump("nana_labels")#, function(change_time, 6)
+        hbox:
+            button:
+                text "School"
+                action Jump("ayame_labels")#, function(change_time, 6)
+            button:
+                text "Jungle"
+                action NullAction()#, function(change_time, 6)
+
+style map3_button:
+    xysize (268,268)
+    idle_background "mapbt_idle"
+    hover_background "mapbt_hover"
+    hover_sound "audio/re2_coursor.wav"
+    activate_sound "audio/re2_decide.wav"
+style map3_text:
+    align(.5,.5)
+
+screen map4():
+    add "mapbg"
+    style_prefix "map4"
+    vbox:
+        align .5,.5
+        hbox:
+            button:
+                text "House"
+                action NullAction()#, function(change_time, 6)
+            button:
+                text "Street"
+                action Jump("nana_labels")#, function(change_time, 6)
+        hbox:
+            button:
+                text "School"
+                action Jump("ayame_labels")#, function(change_time, 6)
+            button:
+                text "Jungle"
+                action Jump("mayo_labels")#, function(change_time, 6)
+
+style map4_button:
+    xysize (268,268)
+    idle_background "mapbt_idle"
+    hover_background "mapbt_hover"
+    hover_sound "audio/re2_coursor.wav"
+    activate_sound "audio/re2_decide.wav"
+style map4_text:
     align(.5,.5)
 
 ############################################################## Start Label ##############################################################
@@ -205,8 +332,6 @@ label nana_labels:
         jump nana5
 
 label nana1:
-#    if 6 < time_of_day < 12:
-#       $ change_time()
     show bg street redux day with dis1
     show nana laugh with dissolve
     nana "The licenses for most software and other practical works are designed to take away your freedom to share and change the works."
@@ -436,7 +561,7 @@ label ayame2:
         ayame "If the interface presents a list of user commands or options,"
         ayame "such as a menu, a prominent item in the list meets this criterion."
         hide ayame with dissolve
-    call screen map1 with dis1
+    call screen map2 with dis1
 
 label ayame3:
     scene black with dissolve
@@ -467,7 +592,7 @@ label ayame3:
         show ayame angry with dissolve
         ayame "provided that you comply with the terms of this License in conveying all material for which you do not control copyright."
         hide ayame with dissolve
-    call screen map1 with dis1
+    call screen map2 with dis1
 
 label ayame4:
     scene black with dissolve
@@ -505,7 +630,7 @@ label ayame4:
         ayame "d) Convey the object code by offering access from a designated place"
         ayame "(gratis or for a charge),"
         hide ayame with dissolve
-    call screen map1 with dis1
+    call screen map2 with dis1
 
 label ayame5:
     scene black with dissolve
@@ -538,7 +663,7 @@ label ayame5:
         ayame "you may (if authorized by the copyright holders of that material) supplement the terms of this License with terms:"
         ayame "a) Disclaiming warranty or limiting liability differently from the terms of sections 15 and 16 of this License; or"
         hide ayame with dissolve
-    call screen map1 with dis1
+    call screen map2 with dis1
 
 ############################################################## Mayo's Labels ##############################################################
 
@@ -602,7 +727,7 @@ label mayo2:
         mayo "If the interface presents a list of user commands or options,"
         mayo "such as a menu, a prominent item in the list meets this criterion."
     hide mayo with dissolve
-    call screen map1 with dis1
+    call screen map3 with dis1
 
 label mayo3:
     scene black with dissolve
@@ -633,7 +758,7 @@ label mayo3:
         mayo "and you disclaim any intention to limit operation or modification of the work as a means of enforcing, against the work's users,"
         mayo "your or third parties' legal rights to forbid circumvention of technological measures."
         hide mayo with dissolve
-    call screen map1 with dis1
+    call screen map3 with dis1
 
 label mayo4:
     scene black with dissolve
@@ -669,7 +794,7 @@ label mayo4:
         mayo "A \"User Product\" is either (1) a \"consumer product\","
         mayo "which means any tangible personal property which is normally used for personal,"
         hide mayo with dissolve
-    call screen map1 with dis1
+    call screen map3 with dis1
 
 label mayo5:
     scene black with dissolve
@@ -702,7 +827,7 @@ label mayo5:
         mayo "you may remove that term."
         mayo "If a license document contains a further restriction but permits relicensing or conveying under this License,"
         hide mayo with dissolve
-    call screen map1 with dis1
+    call screen map3 with dis1
 
 ############################################################## Hana's Labels ##############################################################
 
@@ -898,6 +1023,13 @@ label hana5:
     $ day_counter += 1
     jump day_loop
 
+
+
+
+
+   # unused stuff:
+   #    if 6 < time_of_day < 12:
+   #       $ change_time()
    # if (ayame_points > 2 and ayame_choice_1 == "1") or True :
    #     "you are okay"
    # elif (ayame_points < 2 and not ayame_choice_1 == "0"):
