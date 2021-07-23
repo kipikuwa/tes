@@ -1,21 +1,15 @@
 # things to do:
-# empty label for each location
 # time passing system for home
-# change the time after each encounter
-# +1 and -1 icon for menus
 # each label should have 2 bgs
 # splash screen
 # ending screen
 # ending label for each character
-# with glasses and no glasses labels for hanas
 # use text tags
 # change font
 # change style and colors
-# change start meuu
+# change start menu
 # sound effects
-# special heart icon for 5 point selection
 # go to sleep button on bed
-# today flag for each character and remove it at the end of the day
 #
 
 ############################################################## Inits ##############################################################
@@ -57,17 +51,21 @@ init python:
 
 init python:
     def change_time(value):
+        global time_of_day
         for i in range(value):
             time_of_day += 1
             if time_of_day > 24:
                 time_of_day = 0
+
+init python:
+    config.overlay_screens.append("show_day_time")
 ############################################################## Characters ##############################################################
 
 define nana = Character("Nana", who_color="#cb8872", what_color="#FFF") 
 define ayame = Character("Ayame", who_color="#746060", what_color="#FFF")
 define mayo = Character("Mayonaise", who_color="#957372", what_color="#FFF")
 define hana = Character("Hana", who_color="#d7cbc4", what_color="#FFF")
-define p = Character("Unknown", who_color="#1f4eff", what_color="#FFF")
+default p = Character("Unknown", who_color="#1f4eff", what_color="#FFF")
 
 ############################################################## Character Images ##############################################################
 
@@ -154,7 +152,11 @@ image bg jungle afternoon = "images/001/philippines_003_afternoon.jpg"
 image bg jungle night = "images/001/philippines_003_night.jpg"
 
 
+############################################################## Other ##############################################################
 
+image heart01 = "images/other/heart01.png"
+image plus1 = "images/other/plus1.png"
+image minus1 = "images/other/minus1.png"
 
 ############################################################## Variables ##############################################################
 
@@ -170,7 +172,6 @@ default house_flags = []
 default day_counter = 1
 default time_of_day = 0
 
-
 ############################################################## Transitions ##############################################################
 
 define dis1 = Dissolve(1.0)
@@ -185,17 +186,17 @@ screen map1():
         hbox:
             button:
                 text "House"
-                action Jump("hana_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("hana_labels")
             button:
                 text "Street"
-                action NullAction()#, function(change_time, 6)
+                action NullAction()
         hbox:
             button:
                 text "School"
-                action Jump("ayame_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("ayame_labels")
             button:
                 text "Jungle"
-                action Jump("mayo_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("mayo_labels")
 
 style map1_button:
     xysize (268,268)
@@ -214,17 +215,17 @@ screen map2():
         hbox:
             button:
                 text "House"
-                action Jump("hana_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("hana_labels")
             button:
                 text "Street"
-                action Jump("nana_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("nana_labels")
         hbox:
             button:
                 text "School"
-                action NullAction()#, function(change_time, 6)
+                action NullAction()
             button:
                 text "Jungle"
-                action Jump("mayo_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("mayo_labels")
 
 style map2_button:
     xysize (268,268)
@@ -243,17 +244,17 @@ screen map3():
         hbox:
             button:
                 text "House"
-                action Jump("hana_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("hana_labels")
             button:
                 text "Street"
-                action Jump("nana_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("nana_labels")
         hbox:
             button:
                 text "School"
-                action Jump("ayame_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("ayame_labels")
             button:
                 text "Jungle"
-                action NullAction()#, function(change_time, 6)
+                action NullAction()
 
 style map3_button:
     xysize (268,268)
@@ -272,17 +273,17 @@ screen map4():
         hbox:
             button:
                 text "House"
-                action NullAction()#, function(change_time, 6)
+                action NullAction()
             button:
                 text "Street"
-                action Jump("nana_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("nana_labels")
         hbox:
             button:
                 text "School"
-                action Jump("ayame_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("ayame_labels")
             button:
                 text "Jungle"
-                action Jump("mayo_labels")#, function(change_time, 6)
+                action Function(change_time, 6), Jump("mayo_labels")
 
 style map4_button:
     xysize (268,268)
@@ -293,6 +294,8 @@ style map4_button:
 style map4_text:
     align(.5,.5)
 
+screen show_day_time():
+    text str(time_of_day)
 ############################################################## Start Label ##############################################################
 label start:
     jump day_loop
@@ -316,12 +319,18 @@ label house1:
 label house2:
     show bg room morning lightoff with dis1
 
-
 ############################################################## Nana's Labels ##############################################################
 label nana_labels:
     scene black
+    show screen show_day_time
     if not "first" in nana_flags:
         jump nana1
+    elif "today" in nana_flags:
+        jump nana0
+    elif "today" in nana_flags:
+        jump nanae0
+    elif "today" in nana_flags:
+        jump nanan0
     elif nana_points == 2:
         jump nana2
     elif nana_points == 3:
@@ -330,6 +339,21 @@ label nana_labels:
         jump nana4
     elif nana_points == 5:
         jump nana5
+
+label nana0:
+    show bg street redux day with dis1
+    "Nothing to do here!"
+    call screen map1 with dis1
+
+label nanae0:
+    show bg street redux evening with dis1
+    "Nothing to do here!"
+    call screen map1 with dis1
+
+label nanan0:
+    show bg street redux night with dis1
+    "Nothing to do here!"
+    call screen map1 with dis1
 
 label nana1:
     show bg street redux day with dis1
@@ -347,13 +371,14 @@ label nana1:
     nana "that you receive source code or can get it if you want it,"
     nana "that you can change the software or use pieces of it in new free programs, and that you know you can do these things."
     menu:
-        "To protect your rights,":
+        "To protect your rights, ;{image=plus1}":
             p "To protect your rights,"
 
     show nana smile with dissolve
     nana "we need to prevent others from denying you these rights or asking you to surrender the rights."
     hide nana with dissolve
     $ nana_flags.append("first")
+    $ nana_flags.append("today")
     $ nana_points += 1
     jump ayame_labels
 
@@ -368,12 +393,12 @@ label nana2:
     show nana confident with dissolve
     nana "To \"modify\" a work means to copy from or adapt all or part of the work in a fashion requiring copyright permission,"
     menu:
-        "other than the making of an exact copy.":
+        "other than the making of an exact copy. {image=plus1}":
             $ nana_points += 1
             $ nana_choice_1 = "1"
             p "other than the making of an exact copy."
 
-        "The resulting work is called a \"modified version\" of the earlier work or a work \"based on\" the earlier work.":
+        "The resulting work is called a \"modified version\" of the earlier work or a work \"based on\" the earlier work. {image=minus1}":
             $ nana_points -= 1
             $ nana_choice_1 = "0"
             p "The resulting work is called a \"modified version\" of the earlier work or a work \"based on\" the earlier work."
@@ -387,6 +412,7 @@ label nana2:
         nana "would make you directly or secondarily liable for infringement under applicable copyright law,"
         nana "except executing it on a computer or modifying a private copy."
         hide nana with dissolve
+    $ nana_flags.append("today")
     call screen map1 with dis1
 
 label nana3:
@@ -399,12 +425,12 @@ label nana3:
     nana "install, and (for an executable work) run the object code and to modify the work,"
     nana "including scripts to control those activities.  However, it does not include the work's System Libraries,"
     menu:
-        "or general-purpose tools or generally available free programs which are used unmodified in performing those activities but which are not part of the work.":
+        "or general-purpose tools or generally available free programs which are used unmodified in performing those activities but which are not part of the work. {image=plus1}":
             $ nana_points += 1
             $ nana_choice_1 = "1"
             p "or general-purpose tools or generally available free programs which are used unmodified in performing those activities but which are not part of the work."
 
-        "For example, Corresponding Source includes interface definition files associated with source files for the work,":
+        "For example, Corresponding Source includes interface definition files associated with source files for the work, {image=minus1}":
             $ nana_points -= 1
             $ nana_choice_1 = "0"
             p "For example, Corresponding Source includes interface definition files associated with source files for the work,"
@@ -418,6 +444,7 @@ label nana3:
         nana "The Corresponding Source need not include anything that users can regenerate automatically from other parts of the Corresponding Source."
         nana "The Corresponding Source for a work in source code form is that same work."
         hide nana with dissolve
+    $ nana_flags.append("today")
     call screen map1 with dis1
 
 label nana4:
@@ -433,22 +460,22 @@ label nana4:
     nana "d) If the work has interactive user interfaces, each must display Appropriate Legal Notices; however,"
     nana "if the Program has interactive interfaces that do not display Appropriate Legal Notices, your work need not make them do so."
     menu:
-        "A compilation of a covered work with other separate and independent works, which are not by their nature extensions of the covered work,":
+        "A compilation of a covered work with other separate and independent works, which are not by their nature extensions of the covered work, {image=plus1}":
             $ nana_points += 1
             $ nana_choice_1 = "1"
             p "A compilation of a covered work with other separate and independent works, which are not by their nature extensions of the covered work,"
 
-        "and which are not combined with it such as to form a larger program,":
+        "and which are not combined with it such as to form a larger program, {image=plus1}":
             $ nana_points += 1
             $ nana_choice_1 = "1"
             p "and which are not combined with it such as to form a larger program,"
         
-        "in or on a volume of a storage or distribution medium, is called an \"aggregate\"":
+        "in or on a volume of a storage or distribution medium, is called an \"aggregate\" {image=plus1}":
             $ nana_points += 1
             $ nana_choice_1 = "1"
             p "in or on a volume of a storage or distribution medium, is called an \"aggregate\""
 
-        "if the compilation and its resulting copyright are not used to limit the access or legal rights of the compilation's users beyond what the individual works permit.":
+        "if the compilation and its resulting copyright are not used to limit the access or legal rights of the compilation's users beyond what the individual works permit. {image=minus1}":
             $ nana_points -= 1
             $ nana_choice_1 = "0"
             p "if the compilation and its resulting copyright are not used to limit the access or legal rights of the compilation's users beyond what the individual works permit."
@@ -464,6 +491,7 @@ label nana4:
         nana "machine-readable Corresponding Source under the terms of this License, in one of these ways:"
         nana "a) Convey the object code in, or embodied in, a physical product (including a physical distribution medium),"
         hide nana with dissolve
+    $ nana_flags.append("today")
     call screen map1 with dis1
 
 label nana5:
@@ -479,12 +507,12 @@ label nana5:
     nana "or for the User Product in which it has been modified or installed."
     nana "Access to a network may be denied when the modification itself materially and adversely affects the operation of the network or violates the rules and protocols for communication across the network."
     menu:
-        "Corresponding Source conveyed, and Installation Information provided,":
+        "Corresponding Source conveyed, and Installation Information provided, {image=heart01}":
             $ nana_points += 1
             $ nana_choice_1 = "1"
             p "Corresponding Source conveyed, and Installation Information provided,"
 
-        "in accord with this section must be in a format that is publicly documented":
+        "in accord with this section must be in a format that is publicly documented {image=minus1}":
             $ nana_points -= 1
             $ nana_choice_1 = "0"
             p "in accord with this section must be in a format that is publicly documented"
@@ -500,6 +528,7 @@ label nana5:
         nana "\"Additional permissions\" are terms that supplement the terms of this License by making exceptions from one or more of its conditions."
         nana "Additional permissions that are applicable to the entire Program shall be treated as though they were included in this License,"
         hide nana with dissolve
+    $ nana_flags.append("today")
     call screen map1 with dis1
             
 ############################################################## Ayame's Labels ##############################################################
@@ -507,6 +536,8 @@ label ayame_labels:
     scene black
     if not "first" in ayame_flags:
         jump ayame1
+    elif "today" in ayame_flags:
+        jump ayame0
     elif ayame_points == 2:
         jump ayame2
     elif ayame_points == 3:
@@ -516,13 +547,29 @@ label ayame_labels:
     elif ayame_points == 5:
         jump ayame5
 
+
+label ayame0:
+    show bg classroom 3 day with dis1
+    "Nothing to do here!"
+    call screen map2 with dis1
+
+label ayamee0:
+    show bg classroom 3 day with dis1
+    "Nothing to do here!"
+    call screen map2 with dis1
+
+label ayamen0:
+    show bg classroom 3 day with dis1
+    "Nothing to do here!"
+    call screen map2 with dis1
+
 label ayame1:
     scene black with dissolve
     show bg classroom 3 day with dis1
     show ayame talk with dissolve
     ayame "Therefore, you have certain responsibilities if you distribute copies of the software,"
     menu:
-        "or if you modify it: responsibilities to respect the freedom of others.":
+        "or if you modify it: responsibilities to respect the freedom of others. {image=plus1}":
             p "or if you modify it: responsibilities to respect the freedom of others."
 
     show ayame smile with dissolve
@@ -541,11 +588,11 @@ label ayame2:
     ayame "making available to the public, and in some countries other activities as well."
     ayame "To \"convey\" a work means any kind of propagation that enables other parties to make or receive copies.  Mere interaction with a user through a computer network, with no transfer of a copy, is not conveying."
     menu:
-        "An interactive user interface displays \"Appropriate Legal Notices\"":
+        "An interactive user interface displays \"Appropriate Legal Notices\" {image=plus1}":
             $ ayame_points += 1
             $ ayame_choice_1 = "1"
             p "An interactive user interface displays \"Appropriate Legal Notices\""
-        "to the extent that it includes a convenient and prominently visible feature that":
+        "to the extent that it includes a convenient and prominently visible feature that {image=minus1}":
             $ ayame_points -= 1
             $ ayame_choice_1 = "0"
             p "to the extent that it includes a convenient and prominently visible feature that"
@@ -561,6 +608,7 @@ label ayame2:
         ayame "If the interface presents a list of user commands or options,"
         ayame "such as a menu, a prominent item in the list meets this criterion."
         hide ayame with dissolve
+    $ ayame_flags.append("today")
     call screen map2 with dis1
 
 label ayame3:
@@ -572,11 +620,11 @@ label ayame3:
     ayame "and are irrevocable provided the stated conditions are met."
     ayame "This License explicitly affirms your unlimited permission to run the unmodified Program."
     menu:
-        "The output from running a covered work is covered by this License only if the output,":
+        "The output from running a covered work is covered by this License only if the output, {image=plus1}":
             $ ayame_points += 1
             $ ayame_choice_1 = "1"
             p "The output from running a covered work is covered by this License only if the output,"
-        "given its content, constitutes a covered work.":
+        "given its content, constitutes a covered work. {image=minus1}":
             $ ayame_points -= 1
             $ ayame_choice_1 = "0"
             p "given its content, constitutes a covered work."
@@ -592,6 +640,7 @@ label ayame3:
         show ayame angry with dissolve
         ayame "provided that you comply with the terms of this License in conveying all material for which you do not control copyright."
         hide ayame with dissolve
+    $ ayame_flags.append("today")
     call screen map2 with dis1
 
 label ayame4:
@@ -603,17 +652,17 @@ label ayame4:
     ayame "accompanied by a written offer,"
     ayame "valid for at least three years and valid for as long as you offer spare parts or customer support for that product model,."
     menu:
-        "to give anyone who possesses the object code either":
+        "to give anyone who possesses the object code either {image=plus1}":
             $ ayame_points += 1
             $ ayame_choice_1 = "1"
             p "to give anyone who possesses the object code either"
 
-        "(1) a copy of the Corresponding Source for all the software in the product that is covered by this License,":
+        "(1) a copy of the Corresponding Source for all the software in the product that is covered by this License, {image=plus1}":
             $ ayame_points += 1
             $ ayame_choice_1 = "1"
             p "(1) a copy of the Corresponding Source for all the software in the product that is covered by this License,"
 
-        "on a durable physical medium customarily used for software interchange, for a price no more than your reasonable cost of physically performing this conveying of source, or":
+        "on a durable physical medium customarily used for software interchange, for a price no more than your reasonable cost of physically performing this conveying of source, or {image=minus1}":
             $ ayame_points -= 1
             $ ayame_choice_1 = "0"
             p "on a durable physical medium customarily used for software interchange, for a price no more than your reasonable cost of physically performing this conveying of source, or"
@@ -630,6 +679,7 @@ label ayame4:
         ayame "d) Convey the object code by offering access from a designated place"
         ayame "(gratis or for a charge),"
         hide ayame with dissolve
+    $ ayame_flags.append("today")
     call screen map2 with dis1
 
 label ayame5:
@@ -641,12 +691,12 @@ label ayame5:
     ayame "but the entire Program remains governed by this License without regard to the additional permissions."
     ayame "When you convey a copy of a covered work,"
     menu:
-        "you may at your option remove any additional permissions from that copy,":
+        "you may at your option remove any additional permissions from that copy, {image=heart01}":
             $ ayame_points += 1
             $ ayame_choice_1 = "1"
             p "you may at your option remove any additional permissions from that copy,"
 
-        "or from any part of it.":
+        "or from any part of it. {image=minus1}":
             $ ayame_points -= 1
             $ ayame_choice_1 = "0"
             p "or from any part of it."
@@ -663,6 +713,7 @@ label ayame5:
         ayame "you may (if authorized by the copyright holders of that material) supplement the terms of this License with terms:"
         ayame "a) Disclaiming warranty or limiting liability differently from the terms of sections 15 and 16 of this License; or"
         hide ayame with dissolve
+    $ ayame_flags.append("today")
     call screen map2 with dis1
 
 ############################################################## Mayo's Labels ##############################################################
@@ -671,6 +722,8 @@ label mayo_labels:
     scene black
     if not "first" in mayo_flags:
         jump mayo1
+    elif "today" in mayo_flags:
+        jump mayo0
     elif mayo_points == 2:
         jump mayo2
     elif mayo_points == 3:
@@ -679,6 +732,25 @@ label mayo_labels:
         jump mayo4
     elif mayo_points == 5:
         jump mayo5
+
+   
+
+label mayo0:
+    show bg street home evening with dissolve
+    "Nothing to do here!"
+    call screen map3 with dis1
+
+label mayoe0:
+    show bg street home evening with dissolve
+    "Nothing to do here!"
+    call screen map3 with dis1
+
+label mayon0:
+    show bg street home evening with dissolve
+    "Nothing to do here!"
+    call screen map3 with dis1
+
+
 label mayo1:
     scene black with dissolve
     show bg street home evening with dissolve
@@ -687,7 +759,7 @@ label mayo1:
     mayo "And you must show them these terms so they know their rights."
     mayo "Developers that use the GNU GPL protect your rights with two steps:"
     menu:
-        "(1) assert copyright on the software,":
+        "(1) assert copyright on the software, {image=plus1}":
             p "and (2) offer you this License giving you legal permission to copy, distribute and/or modify it."
     show mayo smile with dissolve
     mayo "or the developers' and authors' protection, the GPL clearly explains that there is no warranty for this free software.  For both users' and authors' sake,"
@@ -709,11 +781,11 @@ label mayo2:
     mayo "making available to the public, and in some countries other activities as well."
     mayo "To \"convey\" a work means any kind of propagation that enables other parties to make or receive copies.  Mere interaction with a user through a computer network, with no transfer of a copy, is not conveying."
     menu:
-        "An interactive user interface displays \"Appropriate Legal Notices\"":
+        "An interactive user interface displays \"Appropriate Legal Notices\" {image=plus1}":
             $ mayo_points += 1
             $ mayo_choice_1 = "1"
             p "An interactive user interface displays \"Appropriate Legal Notices\""
-        "to the extent that it includes a convenient and prominently visible feature that":
+        "to the extent that it includes a convenient and prominently visible feature that {image=minus1}":
             $ mayo_points -= 1
             $ mayo_choice_1 = "0"
             p "to the extent that it includes a convenient and prominently visible feature that"
@@ -727,6 +799,7 @@ label mayo2:
         mayo "If the interface presents a list of user commands or options,"
         mayo "such as a menu, a prominent item in the list meets this criterion."
     hide mayo with dissolve
+    $ mayo_flags.append("today")
     call screen map3 with dis1
 
 label mayo3:
@@ -737,11 +810,11 @@ label mayo3:
     mayo "under your direction and control,"
     mayo "on terms that prohibit them from making any copies of your copyrighted material outside their relationship with you."
     menu:
-        "Conveying under any other circumstances is permitted solely under the conditions stated below.":
+        "Conveying under any other circumstances is permitted solely under the conditions stated below. {image=plus1}":
             $ mayo_points += 1
             $ mayo_choice_1 = "1"
             p "Conveying under any other circumstances is permitted solely under the conditions stated below."
-        "Sublicensing is not allowed; section 10 makes it unnecessary.":
+        "Sublicensing is not allowed; section 10 makes it unnecessary. {image=minus1}":
             $ mayo_points -= 1
             $ mayo_choice_1 = "0"
             p "Sublicensing is not allowed; section 10 makes it unnecessary."
@@ -758,6 +831,7 @@ label mayo3:
         mayo "and you disclaim any intention to limit operation or modification of the work as a means of enforcing, against the work's users,"
         mayo "your or third parties' legal rights to forbid circumvention of technological measures."
         hide mayo with dissolve
+    $ mayo_flags.append("today")
     call screen map3 with dis1
 
 label mayo4:
@@ -768,15 +842,15 @@ label mayo4:
     mayo "You need not require recipients to copy the Corresponding Source along with the object code."
     mayo "If the place to copy the object code is a network server, the Corresponding Source may be on a different server (operated by you or a third party)"
     menu:
-        "that supports equivalent copying facilities,":
+        "that supports equivalent copying facilities, {image=plus1}":
             $ mayo_points += 1
             $ mayo_choice_1 = "1"
             p "that supports equivalent copying facilities,"
-        "provided you maintain clear directions next to the object code saying where to find the Corresponding Source.":
+        "provided you maintain clear directions next to the object code saying where to find the Corresponding Source. {image=plus1}":
             $ mayo_points += 1
             $ mayo_choice_1 = "1"
             p "provided you maintain clear directions next to the object code saying where to find the Corresponding Source."
-        "Regardless of what server hosts the Corresponding Source,":
+        "Regardless of what server hosts the Corresponding Source, {image=minus1}":
             $ mayo_points -= 1
             $ mayo_choice_1 = "0"
             p "Regardless of what server hosts the Corresponding Source,"
@@ -794,6 +868,7 @@ label mayo4:
         mayo "A \"User Product\" is either (1) a \"consumer product\","
         mayo "which means any tangible personal property which is normally used for personal,"
         hide mayo with dissolve
+    $ mayo_flags.append("today")
     call screen map3 with dis1
 
 label mayo5:
@@ -804,12 +879,12 @@ label mayo5:
     mayo "c) Prohibiting misrepresentation of the origin of that material, or requiring that modified versions of such material be marked in reasonable ways as different from the original version; or"
     mayo "d) Limiting the use for publicity purposes of names of licensors or authors of the material; or"
     menu:
-        "e) Declining to grant rights under trademark law for use of some trade names, trademarks, or service marks; or":
+        "e) Declining to grant rights under trademark law for use of some trade names, trademarks, or service marks; or {image=heart01}":
             $ mayo_points += 1
             $ mayo_choice_1 = "1"
             p "e) Declining to grant rights under trademark law for use of some trade names, trademarks, or service marks; or"
 
-        "f) Requiring indemnification of licensors and authors of that material by anyone who conveys the material":
+        "f) Requiring indemnification of licensors and authors of that material by anyone who conveys the material {image=minus1}":
             $ mayo_points -= 1
             $ mayo_choice_1 = "0"
             p "f) Requiring indemnification of licensors and authors of that material by anyone who conveys the material"
@@ -827,6 +902,7 @@ label mayo5:
         mayo "you may remove that term."
         mayo "If a license document contains a further restriction but permits relicensing or conveying under this License,"
         hide mayo with dissolve
+    $ mayo_flags.append("today")
     call screen map3 with dis1
 
 ############################################################## Hana's Labels ##############################################################
@@ -835,6 +911,8 @@ label hana_labels:
     scene black
     if not "first" in hana_flags:
         jump hana1
+    elif "today" in hana_flags:
+        jump hana0
     elif hana_points == 2:
         jump hana2
     elif hana_points == 3:
@@ -843,6 +921,14 @@ label hana_labels:
         jump hana4
     elif hana_points == 5:
         jump hana5
+
+    
+
+label hana0:
+    show bg room night lightoff with dissolve
+    "Nothing to do here!"
+    call screen map4 with dis1
+
 
 label hana1:
     show bg room night lightoff with dissolve
@@ -854,7 +940,7 @@ label hana1:
     hana "as needed to protect the freedom of users."
     hana "Finally, every program is threatened constantly by software patents."
     menu:
-        "States should not allow patents to restrict development and use of software on general-purpose computers,":
+        "States should not allow patents to restrict development and use of software on general-purpose computers, {image=plus1}":
             p "States should not allow patents to restrict development and use of software on general-purpose computers,"
 
     show hana smileg with dissolve
@@ -865,9 +951,7 @@ label hana1:
     hide hana with dissolve
     $ hana_flags.append("first")
     $ hana_points += 1
-    pause
-    $ day_counter += 1
-    jump day_loop
+    jump day_end
 
 label hana2:
     show bg room night lightoff with dissolve
@@ -877,16 +961,16 @@ label hana2:
     hana "The \"source code\" for a work means the preferred form of the work for making modifications to it."
     hana "\"Object code\" means any non-source form of a work."
     menu:
-        "A \"Standard Interface\" means an interface that either is an official standard defined by a recognized standards body,":
+        "A \"Standard Interface\" means an interface that either is an official standard defined by a recognized standards body, {image=plus1} \"With Glasses\"":
             $ hana_points += 1
             $ hana_choice_1 = "1"
-            $ hana_flags.append("noglass")
+            $ hana_flags.append("noglasses")
             p "A \"Standard Interface\" means an interface that either is an official standard defined by a recognized standards body,"
-        "or, in the case of interfaces specified for a particular programming language,":
+        "or, in the case of interfaces specified for a particular programming language, {image=plus1} \"Without Glasses\"":
             $ hana_points += 1
-            $ hana_choice_1 = "1"
+            $ hana_choice_1 = "2"
             p "or, in the case of interfaces specified for a particular programming language,"
-        "...":
+        "... {image=minus1}":
             $ hana_points -= 1
             $ hana_choice_1 = "0"
             p "..."
@@ -896,6 +980,12 @@ label hana2:
         hana "The \"System Libraries\" of an executable work include anything, other than the work as a whole, that (a) is included in the normal form of packaging a Major Component,"
         hide hana with dissolve
         
+    if hana_choice_1 == "2":
+        show hana smileg with dissolve
+        hana "one that is widely used among developers working in that language."
+        hana "The \"System Libraries\" of an executable work include anything, other than the work as a whole, that (a) is included in the normal form of packaging a Major Component,"
+        hide hana with dissolve
+
     if hana_choice_1 == "0":
         show hana angryg with dissolve
         hana "but which is not part of that Major Component,"
@@ -903,13 +993,15 @@ label hana2:
         hana "or to implement a Standard Interface for which an implementation is available to the public in source code form."
         hide hana with dissolve
         
-    $ day_counter += 1
-    jump day_loop
+    jump day_end
 
 label hana3:
     show bg room night lightoff with dissolve
     scene black with dis2
-    show hana smileg with dissolve
+    if "noglasses" not in hana_flags:
+        show hana smileg with dissolve
+    else:
+        show hana smile with dissolve
     hana "Conveying Verbatim Copies."
     hana "You may convey verbatim copies of the Program's source code as you receive it,"
     hana "in any medium, provided that you conspicuously and appropriately publish on each copy an appropriate copyright notice;"
@@ -917,36 +1009,44 @@ label hana3:
     hana "keep intact all notices of the absence of any warranty;"
     hana "and give all recipients a copy of this License along with the Program."
     menu:
-        "You may charge any price or no price for each copy that you convey, and you may offer support or warranty protection for a fee.":
+        "You may charge any price or no price for each copy that you convey, and you may offer support or warranty protection for a fee. {image=plus1}":
             $ hana_points += 1
             $ hana_choice_1 = "1"
             p "You may charge any price or no price for each copy that you convey, and you may offer support or warranty protection for a fee."
-        "Conveying Modified Source Versions.":
+        "Conveying Modified Source Versions. {image=minus1}":
             $ hana_points -= 1
             $ hana_choice_1 = "0"
             p "Conveying Modified Source Versions."
     if hana_choice_1 == "1":
-        show hana smile with dissolve
-        hana "You may convey a work based on the Program, or the modifications to produce it from the Program,"
-        hana "a) The work must carry prominent notices stating that you modified it,"
-        hana "and giving a relevant date."
-        hide hana with dissolve
+        if "noglasses" not in hana_flags:
+            show hana smileg with dissolve
+        else:
+            show hana smile with dissolve
+            hana "You may convey a work based on the Program, or the modifications to produce it from the Program,"
+            hana "a) The work must carry prominent notices stating that you modified it,"
+            hana "and giving a relevant date."
+            hide hana with dissolve
         
     if hana_choice_1 == "0":
-        show hana smileg with dissolve
-        hana " b) The work must carry prominent notices stating that it is released under this License and any conditions added under section 7."
-        hana "This requirement modifies the requirement in section 4 to \"keep intact all notices\"."
-        hana "c) You must license the entire work, as a whole,"
-        hana "under this License to anyone who comes into possession of a copy."
+        if "noglasses" not in hana_flags:
+            show hana angryg with dissolve
+        else:
+            show hana angry with dissolve
+            hana " b) The work must carry prominent notices stating that it is released under this License and any conditions added under section 7."
+            hana "This requirement modifies the requirement in section 4 to \"keep intact all notices\"."
+            hana "c) You must license the entire work, as a whole,"
+            hana "under this License to anyone who comes into possession of a copy."
         hide hana with dissolve
         
-    $ day_counter += 1
-    jump day_loop
+    jump day_end
 
 label hana4:
     show bg room night lightoff with dissolve
     scene black with dis2
-    show hana smileg with dissolve
+    if "noglasses" not in hana_flags:
+        show hana smileg with dissolve
+    else:
+        show hana smile with dissolve
     hana "family, or household purposes, or (2) anything designed or sold for incorporation into a dwelling."
     hana "In determining whether a product is a consumer product, doubtful cases shall be resolved in favor of coverage."
     hana "For a particular product received by a particular user,"
@@ -954,85 +1054,100 @@ label hana4:
     hana "regardless of the status of the particular user or of the way in which the particular user actually uses,"
     hana "or expects or is expected to use, the product."
     menu:
-        "A product is a consumer product regardless of whether the product has substantial commercial,":
+        "A product is a consumer product regardless of whether the product has substantial commercial, {image=plus1}":
             $ hana_points += 1
             $ hana_choice_1 = "1"
             p "A product is a consumer product regardless of whether the product has substantial commercial,"
-        "industrial or non-consumer uses, unless such uses represent the only significant mode of use of the product.":
+        "industrial or non-consumer uses, unless such uses represent the only significant mode of use of the product. {image=plus1}":
             $ hana_points += 1
             $ hana_choice_1 = "1"
             p "industrial or non-consumer uses, unless such uses represent the only significant mode of use of the product."
-        "\"Installation Information\" for a User Product means any methods, procedures,":
+        "\"Installation Information\" for a User Product means any methods, procedures, {image=minus1}":
             $ hana_points -= 1
             $ hana_choice_1 = "0"
             p "\"Installation Information\" for a User Product means any methods, procedures,"
     if hana_choice_1 == "1":
-        show hana smile with dissolve
+        if "noglasses" not in hana_flags:
+            show hana smileg with dissolve
+        else:
+            show hana smile with dissolve
         hana "authorization keys,"
         hana "or other information required to install and execute modified versions of a covered work in that User Product from a modified version of its Corresponding Source."
         hana "The information must suffice to ensure that the continued functioning of the modified object code is in no case prevented or interfered with solely because modification has been made."
         hide hana with dissolve
         
     if hana_choice_1 == "0":
-        show hana smileg with dissolve
+        if "noglasses" not in hana_flags:
+            show hana angryg with dissolve
+        else:
+            show hana angry with dissolve
         hana "If you convey an object code work under this section in, or with,"
         hana "or specifically for use in, a User Product,"
         hana "and the conveying occurs as part of a transaction in which the right of possession and use of the User Product is transferred to the recipient in perpetuity or for a fixed term "
         hana "(regardless of how the transaction is characterized), the Corresponding Source conveyed under this section must be accompanied by the Installation Information."
         hide hana with dissolve
         
-    $ day_counter += 1
-    jump day_loop
+    jump day_end
 
 label hana5:
     show bg room night lightoff with dissolve
     scene black with dis2
-    show hana smileg with dissolve
+    if "noglasses" not in hana_flags:
+        show hana smileg with dissolve
+    else:
+        show hana smile with dissolve
     hana "you may add to a covered work material governed by the terms of that license document,"
     hana "provided that the further restriction does not survive such relicensing or conveying."
     hana "If you add terms to a covered work in accord with this section, you must place,"
     hana "in the relevant source files, a statement of the additional terms that apply to those files, or a notice indicating where to find the applicable terms."
     hana "Additional terms, permissive or non-permissive, may be stated in the form of a separately written license,"
-    hana "or stated as exceptions; the above requirements apply either way.
-"
+    hana "or stated as exceptions; the above requirements apply either way."
     menu:
-        "8. Termination.":
+        "8. Termination. {image=heart01}":
             $ hana_points += 1
             $ hana_choice_1 = "1"
             p "8. Termination."
 
-        "You may not propagate or modify a covered work except as expressly provided under this License.":
+        "You may not propagate or modify a covered work except as expressly provided under this License. {image=minus1}":
             $ hana_points -= 1
             $ hana_choice_1 = "0"
             p "You may not propagate or modify a covered work except as expressly provided under this License."
     if hana_choice_1 == "1":
-        show hana smile with dissolve
+        if "noglasses" not in hana_flags:
+            show hana smileg with dissolve
+        else:
+            show hana smile with dissolve
         hana "Any attempt otherwise to propagate or modify it is void, and will automatically terminate your rights under this License"
         hana "(including any patent licenses granted under the third paragraph of section 11)."
         hana "However, if you cease all violation of this License, then your license from a particular copyright holder is reinstated"
         hide hana with dissolve
         
     if hana_choice_1 == "0":
-        show hana smileg with dissolve
+        if "noglasses" not in hana_flags:
+            show hana angryg with dissolve
+        else:
+            show hana angry with dissolve
         hana "(a) provisionally, unless and until the copyright holder explicitly and finally terminates your license, and"
         hana "(b) permanently, if the copyright holder fails to notify you of the violation by some reasonable means prior to 60 days after the cessation."
         hana "Moreover, your license from a particular copyright holder is reinstated permanently if the copyright holder notifies you of the violation by some reasonable means,"
         hana "this is the first time you have received notice of violation of this License (for any work) from that copyright holder,"
         hide hana with dissolve
-        
+    jump day_end
+    
+
+label day_end:
+    if "today" in nana_flags:
+        $ nana_flags.remove("today")
+    if "today" in ayame_flags:
+        $ ayame_flags.remove("today")
+    if "today" in mayo_flags:
+        $ mayo_flags.remove("today")
+    if "today" in hana_flags:
+        $ hana_flags.remove("today")
     $ day_counter += 1
     jump day_loop
 
 
 
-
-
    # unused stuff:
-   #    if 6 < time_of_day < 12:
-   #       $ change_time()
-   # if (ayame_points > 2 and ayame_choice_1 == "1") or True :
-   #     "you are okay"
-   # elif (ayame_points < 2 and not ayame_choice_1 == "0"):
-   #     "you are not okay"
-
    
