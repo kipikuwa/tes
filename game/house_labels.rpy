@@ -8,14 +8,10 @@ label house_labels:
     else:
         jump house2
 label house1:
-    show screen room_lights
-    show screen map_icon
     show bg room morning with dis1
     pause
-    "{cps=25} The GNU General Public License is a free, copyleft license for software and other kinds of works. {cps=25}"
+    "The GNU General Public License is a free, copyleft license for software and other kinds of works."
     $ house_flags.append("first")
-    hide screen room_lights
-    hide screen map_icon
     jump nana_labels
 
 label house2:
@@ -25,13 +21,11 @@ label house2:
     call screen room_lights
     
 label house_menu:
-    
     if 17 < time_of_day <= 24:
         jump hana_labels
     else:
         "I can't sleep right now!"
-        "better do something to pass the time."
-
+        "Better do something to pass the time."
         menu:
             "Watch TV for 6 hours":
                 $ player_choice_1 = "1"

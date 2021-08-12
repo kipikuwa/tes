@@ -2,7 +2,6 @@
 
 label ayame_labels:
     hide room_lights
-    
     hide map1
     $ current_label = "ayame"
     scene black
@@ -25,25 +24,21 @@ label ayame_labels:
 
 
 label ayame0:
-    
     show bg classroom 3 day with dis1
     "Nothing to do here!"
     call screen map1 with dis1
 
 label ayamee0:
-    
     show bg classroom 3 evening with dis1
     "Nothing to do here!"
     call screen map1 with dis1
 
 label ayamen0:
-    
     show bg classroom 3 night with dis1
     "Nothing to do here!"
     call screen map1 with dis1
 
 label ayame1:
-    
     scene black with dissolve
     show bg classroom 3 day with dis1
     show ayame talk with dissolve
@@ -61,7 +56,6 @@ label ayame1:
     jump mayo_labels
 
 label ayame2:
-    
     scene black with dissolve
     show bg classroom 3 day with dis1
     show ayame talk with dissolve
@@ -93,7 +87,6 @@ label ayame2:
     call screen map1 with dis1
 
 label ayame3:
-    
     scene black with dissolve
     show bg classroom 3 day with dis1
     show ayame talk with dissolve
@@ -126,7 +119,6 @@ label ayame3:
     call screen map1 with dis1
 
 label ayame4:
-    
     scene black with dissolve
     show bg classroom 3 day with dis1
     show ayame talk with dissolve
@@ -166,7 +158,6 @@ label ayame4:
     call screen map1 with dis1
 
 label ayame5:
-    
     scene black with dissolve
     show bg classroom 3 day with dis1
     show ayame talk with dissolve
@@ -203,7 +194,6 @@ label ayame5:
         call screen map1 with dis1
 
 label ayame_end:
-    
     scene black with dis1
     if 0 < time_of_day < 12:
         show bg street redux day with dis1
@@ -212,9 +202,9 @@ label ayame_end:
     elif 17 < time_of_day < 24:
         show bg street redux night with dis1
     show ayame embarrased with dissolve
-    "This is the end with Nana! [time_of_day] "
+    "This is the end with Nana!"
     show ayame happy with dis1
-    "It finnaly came!"
+    "It's time!"
     show ayame smile with dis1
     "I Love You!"
     show ayame laugh with dis1

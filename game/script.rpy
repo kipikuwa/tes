@@ -1,10 +1,3 @@
-# things to do:
-# ending screen
-# use text tags
-# change font
-# change style and colors
-#
-
 ############################################################## Variables ##############################################################
 
 default nana_points = 1
@@ -19,6 +12,7 @@ default house_flags = []
 default day_counter = 1
 default time_of_day = 0
 default hana_loc_choice = 0
+default hana_glasses = True
 default lightswitch = True
 default current_label = None
 default house_time = None
@@ -68,7 +62,7 @@ label start:
 
 label day_loop:
     
-    #play sound daydream
+    play sound daydream
     scene black
     "{cps=5} Day [day_counter] {cps=5}"
     jump house_labels
@@ -88,7 +82,6 @@ label day_end:
     jump day_loop
 
 label ending:
-    
     scene black with dis1
     show screen ending with dissolve
     pause

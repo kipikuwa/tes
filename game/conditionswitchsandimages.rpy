@@ -50,6 +50,47 @@ image bed switch hover = ConditionSwitch(
     "11 < time_of_day < 18" , "bed evening hover",
     "17 < time_of_day <= 24" , "bed night hover")
 
+image hana amused = ConditionSwitch(
+    "hana_glasses" , "hana_amusedg",
+    "not hana_glasses" , "hana_amused")
+
+image hana angry = ConditionSwitch(
+    "hana_glasses" , "hana_angryg",
+    "not hana_glasses" , "hana_angry")
+
+image hana awkward = ConditionSwitch(
+    "hana_glasses" , "hana_awkwardg",
+    "not hana_glasses" , "hana_awkward")
+
+image hana concentrate = ConditionSwitch(
+    "hana_glasses" , "hana_concentrateg",
+    "not hana_glasses" , "hana_concentrate")
+
+image hana dissapointed = ConditionSwitch(
+    "hana_glasses" , "hana_dissapointedg",
+    "not hana_glasses" , "hana_dissapointed")
+
+image hana impressed = ConditionSwitch(
+    "hana_glasses" , "hana_impressedg",
+    "not hana_glasses" , "hana_impressed")
+
+image hana noemo = ConditionSwitch(
+    "hana_glasses" , "hana_noemog",
+    "not hana_glasses" , "hana_noemo")
+
+image hana serious = ConditionSwitch(
+    "hana_glasses" , "hana_seriousg",
+    "not hana_glasses" , "hana_serious")
+
+image hana smile = ConditionSwitch(
+    "hana_glasses" , "hana_smileg",
+    "not hana_glasses" , "hana_smile")
+
+image hana talk = ConditionSwitch(
+    "hana_glasses" , "hana_talkg",
+    "not hana_glasses" , "hana_talk")
+
+
 ############################################################## Character Images ##############################################################
 
 image nana amazed = "images/Nana/amazed.png"
@@ -85,27 +126,27 @@ image mayo smile = "images/Mayonaise/smile.png"
 image mayo talk = "images/Mayonaise/talk.png"
 image mayo wah = "images/Mayonaise/wah.png"
 
-image hana amused = "images/Hana/noglasses/amused.png"
-image hana angry = "images/Hana/noglasses/angry.png"
-image hana awkward = "images/Hana/noglasses/awkward.png"
-image hana concentrate = "images/Hana/noglasses/concentrate.png"
-image hana dissapointed = "images/Hana/noglasses/dissapointed.png"
-image hana impressed = "images/Hana/noglasses/impressed.png"
-image hana noemo = "images/Hana/noglasses/noemo.png"
-image hana serious = "images/Hana/noglasses/serious.png"
-image hana smile = "images/Hana/noglasses/smile.png"
-image hana talk = "images/Hana/noglasses/talk.png"
+# image hana amused = "images/Hana/noglasses/amused.png"
+# image hana angry = "images/Hana/noglasses/angry.png"
+# image hana awkward = "images/Hana/noglasses/awkward.png"
+# image hana concentrate = "images/Hana/noglasses/concentrate.png"
+# image hana dissapointed = "images/Hana/noglasses/dissapointed.png"
+# image hana impressed = "images/Hana/noglasses/impressed.png"
+# image hana noemo = "images/Hana/noglasses/noemo.png"
+# image hana serious = "images/Hana/noglasses/serious.png"
+# image hana smile = "images/Hana/noglasses/smile.png"
+# image hana talk = "images/Hana/noglasses/talk.png"
 
-image hana amusedg = "images/Hana/noglasses/amusedg.png"
-image hana angryg = "images/Hana/noglasses/angryg.png"
-image hana awkwardg = "images/Hana/noglasses/awkwardg.png"
-image hana concentrateg = "images/Hana/noglasses/concentrateg.png"
-image hana dissapointedg= "images/Hana/noglasses/dissapointedg.png"
-image hana impressedg = "images/Hana/noglasses/impressedg.png"
-image hana noemog = "images/Hana/noglasses/noemog.png"
-image hana seriousg = "images/Hana/noglasses/seriousg.png"
-image hana smileg = "images/Hana/noglasses/smileg.png"
-image hana talkg = "images/Hana/noglasses/talkg.png"
+# image hana amusedg = "images/Hana/noglasses/amusedg.png"
+# image hana angryg = "images/Hana/noglasses/angryg.png"
+# image hana awkwardg = "images/Hana/noglasses/awkwardg.png"
+# image hana concentrateg = "images/Hana/noglasses/concentrateg.png"
+# image hana dissapointedg= "images/Hana/noglasses/dissapointedg.png"
+# image hana impressedg = "images/Hana/noglasses/impressedg.png"
+# image hana noemog = "images/Hana/noglasses/noemog.png"
+# image hana seriousg = "images/Hana/noglasses/seriousg.png"
+# image hana smileg = "images/Hana/noglasses/smileg.png"
+# image hana talkg = "images/Hana/noglasses/talkg.png"
 
 ############################################################## Backgrounds ##############################################################
 

@@ -2,7 +2,6 @@
 
 label mayo_labels:
     hide room_lights
-    
     hide map1
     $ current_label = "mayo"
     scene black
@@ -41,7 +40,6 @@ label mayo1:
     jump hana_labels
 
 label mayo2:
-    
     scene black with dissolve
     if 0 < time_of_day < 12:
         show bg jungle day with dis1
@@ -75,7 +73,6 @@ label mayo2:
     call screen map1 with dis1
 
 label mayo3:
-    
     scene black with dissolve
     if 0 < time_of_day < 12:
         show bg jungle day with dis1
@@ -112,7 +109,6 @@ label mayo3:
     call screen map1 with dis1
 
 label mayo4:
-    
     scene black with dissolve
     if 0 < time_of_day < 12:
         show bg jungle day with dis1
@@ -154,7 +150,6 @@ label mayo4:
     call screen map1 with dis1
 
 label mayo5:
-    
     scene black with dissolve
     if 0 < time_of_day < 12:
         show bg jungle day with dis1
@@ -195,7 +190,6 @@ label mayo5:
         call screen map1 with dis1
 
 label mayo_end:
-    
     scene black with dissolve
     if 0 < time_of_day < 12:
         show bg jungle day with dis1
@@ -206,7 +200,7 @@ label mayo_end:
     show mayo emotalk with dissolve
     "This is the end with Nana! [time_of_day] "
     show mayo happy with dis1
-    "It finnaly came!"
+    "It's time!"
     show mayo smile with dis1
     "I Love You!"
     show mayo wah with dis1

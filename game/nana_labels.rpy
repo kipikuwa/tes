@@ -2,7 +2,6 @@
 
 label nana_labels:
     hide room_lights
-    
     hide map1
     $ current_label = "nana"
     scene black
@@ -24,28 +23,24 @@ label nana_labels:
         jump nana5
 
 label nana0:
-    
     show bg street redux day with dis1
     "Nothing to do here!"
     $ current_label = "nana"
     call screen map1 with dis1
 
 label nanae0:
-    
     show bg street redux evening with dis1
     "Nothing to do here!"
     $ current_label = "nana"
     call screen map1 with dis1
 
 label nanan0:
-    
     show bg street redux night with dis1
     "Nothing to do here!"
     $ current_label = "nana"
     call screen map1 with dis1
 
 label nana1:
-    
     show bg street redux day with dis1
     show nana laugh with dissolve
     nana "The licenses for most software and other practical works are designed to take away your freedom to share and change the works."
@@ -73,7 +68,6 @@ label nana1:
     jump ayame_labels
 
 label nana2:
-    
     scene bg street redux day with dis1
     show nana laugh with dissolve
     nana " \"Copyright\" also means copyright-like laws that apply to other kinds of works, such as semiconductor masks."
@@ -142,7 +136,6 @@ label nana3:
     call screen map1 with dis1
 
 label nana4:
-    
     scene bg street redux day with dis1
     show nana laugh with dissolve
     nana "This License will therefore apply, along with any applicable section 7 additional terms,"
@@ -191,7 +184,6 @@ label nana4:
     call screen map1 with dis1
 
 label nana5:
-    
     scene bg street redux day with dis1
     show nana laugh with dissolve
     nana "But this requirement does not apply if neither you nor any third party retains the ability to install modified object code on the User Product"
@@ -232,7 +224,6 @@ label nana5:
         call screen map1 with dis1
 
 label nana_end:
-    
     scene black with dis1
     if 0 < time_of_day < 12:
         show bg street redux day with dis1
@@ -243,9 +234,9 @@ label nana_end:
     else:
         show bg street redux day with dis1
     show nana amazed with dissolve
-    "This is the end with Nana! [time_of_day] "
+    "This is the end with Nana!"
     show nana happy with dis1
-    "It finnaly came!"
+    "It's time!"
     show nana smile with dis1
     "I Love You!"
     show nana laugh with dis1
